@@ -11,6 +11,6 @@ PPreset {
     localArgs = args ? [];
     defName = PresetStorage.get(presetName)[\synth];
     fullArgs = [\instrument, defName.asSymbol]++PresetStorage.get(presetName)[\preset]++localArgs;
-	^Pbind(fullArgs.asPairs);
+	^Pbind(*fullArgs);
   }
 }
