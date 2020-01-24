@@ -1,52 +1,53 @@
 TITLE:: PresetStorage
-summary:: (put short description here)
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+summary:: Utility class for storing information about Synths
+categories:: Utilities
+related:: Classes/SynthPreset, Classes/PPreset
 
 DESCRIPTION::
-(put long description here)
+PresetStorage class helps you to store settings for SynthDefs and use it later
+for fast creating Synths and Patterns  
 
 
 CLASSMETHODS::
 
 METHOD:: get
-(describe method here)
+Get preset from storage. Method used by other classes.
 
 ARGUMENT:: name
-(describe argument here)
+String - preset name
 
-returns:: (describe returnvalue here)
+returns:: Dictionary
 
 METHOD:: add
-(describe method here)
+Save preset into storage
 
 ARGUMENT:: name
-(describe argument here)
+String
 
 ARGUMENT:: synth
-(describe argument here)
+Symbol - should be as symbol used in synthDef you want to store
 
 ARGUMENT:: data
-(describe argument here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: store
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-METHOD:: initClass
-(describe method here)
-
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
+Array - array of SynthDef arguments (controls)
 
 
 EXAMPLES::
 
 code::
-(some example code)
+SynthDef(\mySaw, {
+  | freq, lfo_rate |
+  Out.ar(0, Saw.ar(freq) * SinOsc.kr(lfo_rate).range(0, 1));
+}).add;
+
+PresetStorage.add(
+  "mySaw slow",
+  \mySaw,
+  [\lfo_rate, 0.01]
+);
+
+PresetStorage.add(
+  "mySaw fast",
+  \mySaw,
+  [\lfo_rate, 80]
+);
 ::
