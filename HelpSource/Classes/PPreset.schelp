@@ -1,31 +1,72 @@
 TITLE:: PPreset
-summary:: (put short description here)
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+summary:: Make Pdef with Synth controls stored in PresetStorage
+categories:: Utilities, Patterns
+related:: Classes/PresetStorage, Reference/SomeRelatedStuff, etc.
 
 DESCRIPTION::
-(put long description here)
+Ppreset is a factory class that returns a Pbind with
+predefined events like \instrument and other
 
 
 CLASSMETHODS::
 
 METHOD:: new
-(describe method here)
+Return Pbind with predefined events if preset is stored
+in PresetStorage otherwise throw an Error
 
 ARGUMENT:: presetName
-(describe argument here)
+String
 
 ARGUMENT:: args
-(describe argument here)
+Array of Events (should have even number of events)
 
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
+returns:: Pbind
 
 
 EXAMPLES::
 
 code::
-(some example code)
+SynthDef(\mySaw, {
+  | freq, lfo_rate, amp = 1 |
+  Out.ar(
+    0,
+    Saw.ar(freq)!2 * SinOsc.kr(lfo_rate).range(0, 1) * Env.triangle(0.25, amp).kr(2)
+  );
+}).add;
+
+PresetStorage.add(
+  "mySaw slow",
+  \mySaw,
+  [\lfo_rate, 0.01]
+);
+
+PresetStorage.add(
+  "mySaw fast",
+  \mySaw,
+  [\lfo_rate, 10.0]
+);
+
+~p1 = PPreset(
+  "mySaw slow",
+  [
+    \dur, 0.5,
+    \degree, Pseq([0, 3, 7], inf),
+    \octave, 3,
+    \amp, 0.25
+  ]
+).play;
+
+~p1.stop;
+
+~p2 = PPreset(
+  "mySaw fast",
+  [
+    \dur, 0.5,
+    \degree, Pseq([0, 3, 7], inf),
+    \octave, 3,
+    \amp, 0.25
+  ]
+).play;
+
+~p2.stop;
 ::
