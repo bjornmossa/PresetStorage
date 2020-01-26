@@ -1,37 +1,57 @@
 TITLE:: SynthPreset
-summary:: (put short description here)
-categories:: Undocumented classes
-related:: Classes/SomeRelatedClass, Reference/SomeRelatedStuff, etc.
+summary:: Synth instance with predefined controls
+categories:: Utilities
+related:: Classes/PresetStorage, Classes/PPreset
 
 DESCRIPTION::
-(put long description here)
+Factory class that returns a synth with controls
+stored in PresetStorage
 
 
 CLASSMETHODS::
 
 METHOD:: new
-(describe method here)
+Return Synth with controls predefined in PresetStorage or
+throw an error if preset doesn't exist.
 
 ARGUMENT:: presetName
-(describe argument here)
+String. Name of preset stored in PresetStorage
 
 ARGUMENT:: args
-(describe argument here)
+Array. Additional Synth arguments that will be concatenated with
+preset arguments.
 
 ARGUMENT:: target
-(describe argument here)
+Same as Synth target. default_group by default
 
 ARGUMENT:: addAction
-(describe argument here)
+Symbol - same as Synth argument. \addToHead by default
 
-returns:: (describe returnvalue here)
-
-
-INSTANCEMETHODS::
-
+returns:: Synth
 
 EXAMPLES::
 
 code::
-(some example code)
+SynthDef(\mySaw, {
+  | freq, lfo_rate, amp = 1 |
+  Out.ar(
+    0,
+    Saw.ar(freq)!2 * SinOsc.kr(lfo_rate).range(0, 1) * Env.triangle(2, amp).kr(2)
+  );
+}).add;
+
+PresetStorage.add(
+  "mySaw slow",
+  \mySaw,
+  [\lfo_rate, 0.01]
+);
+
+PresetStorage.add(
+  "mySaw fast",
+  \mySaw,
+  [\lfo_rate, 100.0]
+);
+
+SynthPreset("mySaw fast", [\freq, 220]);
+SynthPreset("mySaw slow", [\freq, 100]);
 ::
