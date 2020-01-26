@@ -1,7 +1,7 @@
 TITLE:: PPreset
 summary:: Make Pdef with Synth controls stored in PresetStorage
 categories:: Utilities, Patterns
-related:: Classes/PresetStorage, Reference/SomeRelatedStuff, etc.
+related:: Classes/PresetStorage, Classes/SynthPreset
 
 DESCRIPTION::
 Ppreset is a factory class that returns a Pbind with
@@ -18,7 +18,8 @@ ARGUMENT:: presetName
 String
 
 ARGUMENT:: args
-Array of Events (should have even number of events)
+Array of Events (should have even number of events) - additional
+events that will be concatenated with controls stored in PresetStprage
 
 returns:: Pbind
 
