@@ -8,7 +8,9 @@ SynthPreset {
 
     localArgs = args ? [];
     defName = PresetStorage.get(presetName)[\synth];
-    fullArgs = PresetStorage.get(presetName)[\preset]++localArgs;
+    fullArgs = Dictionary.newFrom(PresetStorage.get(presetName)[\preset])
+                         .blend(Dictionary.newFrom(localArgs), 1)
+                         .getPairs;
 
     ^Synth(defName, fullArgs, target.asTarget, addAction);
   }
