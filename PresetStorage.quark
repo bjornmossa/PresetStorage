@@ -1,7 +1,7 @@
 (
   name: "PresetStorage",
   summary: "Classes for saving settings for Synths and Patterns",
-  version: "0.1.1",
+  version: "0.1.2",
   license: "GPL 3.0",
   copyright: "Bjornmossa 2019"
 )
